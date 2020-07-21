@@ -9,9 +9,9 @@
     context: "{{ kubernetes.context }}"  
   register: secret_present
 
-- name: Create the gmaps key secret for {{ component_ns }}
+- name: "Create the gmaps key secret for {{ component_ns }}"
   shell: |
-    KUBECONFIG={{ kubernetes.config_file }} kubectl create secret -n {{ component_ns }} generic gmaps-key --from-literal=gmapskeyvalue='{{ organization_data.app.google_maps_api }}'
+    KUBECONFIG={{ kubernetes.config_file }} kubectl create secret -n {{ component_ns }} generic gmaps-key --from-literal=gmapskeyvalue={{ organization_data.app.google_maps_api }}
   when: secret_present.resources|length == 0
 
 ############################################################################################
