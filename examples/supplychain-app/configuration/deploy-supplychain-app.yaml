@@ -93,21 +93,22 @@
 
   ############################################################################################
   # Create frontend value file for the corda nodes
-  - include_role:
-      name: "create/fabric/frontend"
-    vars:
-      component_name: "frontend"
-      component_ns: "{{ organization_data.name | lower }}-net"
-      component_type: "{{ organization_data.type | default(' ', true) | lower  }}"
-      component_gitops: "{{ organization_data.gitops }}"
-      component_vault: "{{ organization_data.vault }}"
-      kubernetes: "{{ organization_data.k8s }}"
-      values_dir: "{{ playbook_dir }}/../../../{{ organization_data.gitops.release_dir }}"
-    loop: "{{ network['organizations'] }}"
-    loop_control:
-      loop_var: organization_data
-    when: network['type'] == 'fabric' and network['frontend'] == 'enabled' and component_type == 'peer' 
-  
+
+ # - include_role:
+     # name: "create/fabric/frontend"
+    #vars:
+     # component_name: "frontend"
+     # component_ns: "{{ organization_data.name | lower }}-net"
+      #component_type: "{{ organization_data.type | default(' ', true) | lower  }}"
+      #component_gitops: "{{ organization_data.gitops }}"
+     # component_vault: "{{ organization_data.vault }}"
+     # kubernetes: "{{ organization_data.k8s }}"
+    #  values_dir: "{{ playbook_dir }}/../../../{{ organization_data.gitops.release_dir }}"
+   # loop: "{{ network['organizations'] }}"
+   # loop_control:
+   #   loop_var: organization_data
+  #  when: network['type'] == 'fabric' and network['frontend'] == 'enabled' and component_type == 'peer' 
+  ##################
   ############################################################################################
   # Deploy the Smart contract on Quorum node
   - name: "Deploying smartcontract on quorum node"
