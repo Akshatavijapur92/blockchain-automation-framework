@@ -1,0 +1,47 @@
+apiVersion: flux.weave.works/v1beta1
+kind: HelmRelease
+metadata:
+  name: chaincode-install-warehouse-peer0-1-0
+  namespace: warehouse-net
+  annotations:
+    flux.weave.works/automated: "false"
+spec:
+  releaseName: chaincode-install-warehouse-peer0-1-0
+  chart:
+    git: ssh://git@github.com/Akshatavijapur92/blockchain-automation-framework.git
+    ref: master
+    path: platforms/hyperledger-fabric/charts/install_chaincode
+  values:
+    metadata:
+      namespace: warehouse-net
+      images:
+        fabrictools: hyperledger/fabric-tools:1.4.4
+        alpineutils: index.docker.io/hyperledgerlabs/alpine-utils:1.0
+    peer:
+      name: peer0
+      address: peer0.warehouse-net:7051
+      localmspid: warehouseMSP
+      loglevel: debug
+      tlsstatus: true
+    vault:
+      role: vault-role
+      address: http://aa2d78d17c76811eab25a02b991bc25b-1354633767.ap-south-1.elb.amazonaws.com:9000
+      authpath: warehouse-net-auth
+      adminsecretprefix: secret/crypto/peerOrganizations/warehouse-net/users/admin 
+      orderersecretprefix: secret/crypto/peerOrganizations/warehouse-net/orderer
+      serviceaccountname: vault-auth
+      imagesecretname: regcred
+      secretgitprivatekey: secret/credentials/warehouse-net/git?git_password
+      tls: false
+    orderer:
+      address: orderer1.fab.team19.aws.bafevent.com:8443
+    chaincode:
+      name: cc
+      version: 1.0
+      maindirectory: cmd
+      repository:
+        hostname: "github.com"
+        git_username: "Akshatavijapur92"
+        url: github.com/Akshatavijapur92/blockchain-automation-framework.git
+        branch: master
+        path: platforms/hyperledger-fabric/charts/install_chaincode
