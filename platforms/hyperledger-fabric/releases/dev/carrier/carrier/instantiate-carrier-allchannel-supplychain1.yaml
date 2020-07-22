@@ -35,6 +35,7 @@ spec:
     orderer:
       address: orderer1.fab.team19.aws.bafevent.com:8443
     chaincode:
+      builder: hyperledger/fabric-ccenv:1.4.4
       name: supplychain
       version: 1
       instantiationarguments: '\"init\",\"\"'
